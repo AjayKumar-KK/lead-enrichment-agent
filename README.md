@@ -15,7 +15,7 @@ python run.py --domains postman.com supabase.com vapi.ai
    emails   : help@postman.com, sales@postman.com
    team     : 4 found
               - Abhinav Asthana (Co-Founder & CEO) | https://linkedin.com/in/abhinavasthana
-   pages    : 6/6 ok via browser, http  |  18,204 tokens  |  $0.01249  |  11.4s
+   pages    : 6/6 ok via browser, http  |  19,991 tokens  |  $0.00494  |  97.6s
 ```
 
 ---
