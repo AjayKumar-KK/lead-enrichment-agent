@@ -1,0 +1,473 @@
+{
+  "run_started_at": "2026-09-13T05:57:14+00:00",
+  "run_finished_at": "2026-09-13T05:58:52+00:00",
+  "duration_seconds": 97.59,
+  "model": "openai/gpt-oss-120b",
+  "domains_requested": 3,
+  "domains_succeeded": 3,
+  "domains_partial": 0,
+  "domains_failed": 0,
+  "total_tokens": 19991,
+  "total_estimated_cost_usd": 0.004945,
+  "results": [
+    {
+      "domain": "postman.com",
+      "url": "https://postman.com",
+      "status": "success",
+      "company_overview": "Postman is an API platform that enables building, testing, managing, and distributing APIs. It serves engineers and enterprises to streamline the API lifecycle.",
+      "target_audience": "Engineers and development teams building, testing, and managing APIs.",
+      "contact_emails": [
+        {
+          "email": "help@postman.com",
+          "type": "support"
+        },
+        {
+          "email": "info-jp@postman.com",
+          "type": "info"
+        },
+        {
+          "email": "info@postman.com",
+          "type": "info"
+        }
+      ],
+      "personal_emails": [
+        "accommodations@postman.com"
+      ],
+      "team_members": [
+        {
+          "name": "Abhinav Asthana",
+          "title": "CEO and co-founder",
+          "linkedin_url": "https://www.linkedin.com/in/abhinavasthana",
+          "affiliation": "Postman",
+          "title_source": "website",
+          "linkedin_source": "search",
+          "linkedin_confidence": 0.95,
+          "linkedin_evidence": [
+            "name matches profile slug and result title",
+            "company corroborated in search result",
+            "role corroborated in search result"
+          ]
+        },
+        {
+          "name": "Ankit Sobti",
+          "title": "founder",
+          "linkedin_url": "https://www.linkedin.com/in/ankit-sobti",
+          "affiliation": "Postman",
+          "title_source": "website",
+          "linkedin_source": "search",
+          "linkedin_confidence": 0.95,
+          "linkedin_evidence": [
+            "name matches profile slug and result title",
+            "company corroborated in search result",
+            "role corroborated in search result"
+          ]
+        },
+        {
+          "name": "Abhijit Kane",
+          "title": "founder",
+          "linkedin_url": "https://www.linkedin.com/in/abhijitkane",
+          "affiliation": "Postman",
+          "title_source": "website",
+          "linkedin_source": "search",
+          "linkedin_confidence": 0.95,
+          "linkedin_evidence": [
+            "name matches profile slug and result title",
+            "company corroborated in search result",
+            "role corroborated in search result"
+          ]
+        }
+      ],
+      "data_confidence_score": 0.977,
+      "confidence_breakdown": {
+        "completeness": 0.994,
+        "source_coverage": 0.917,
+        "evidence_strength": 0.975,
+        "validation_health": 1.0,
+        "llm_self_reported": 0.9,
+        "final": 0.977,
+        "notes": [
+          "3 LinkedIn URL(s) recovered by search fallback",
+          "1 page(s) had little usable text"
+        ]
+      },
+      "pages_crawled": [
+        {
+          "url": "https://postman.com",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 303532,
+          "clean_chars": 835,
+          "relevance_score": 100.0,
+          "error": null,
+          "duration_seconds": 1.52
+        },
+        {
+          "url": "https://postman.com/company/contact-us",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 239233,
+          "clean_chars": 1524,
+          "relevance_score": 11.5,
+          "error": null,
+          "duration_seconds": 1.73
+        },
+        {
+          "url": "https://postman.com/company/about-postman",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 263738,
+          "clean_chars": 4305,
+          "relevance_score": 8.0,
+          "error": null,
+          "duration_seconds": 1.94
+        },
+        {
+          "url": "https://postman.com/company/contact-sales",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 216114,
+          "clean_chars": 647,
+          "relevance_score": 7.0,
+          "error": null,
+          "duration_seconds": 2.01
+        },
+        {
+          "url": "https://postman.com/company/careers",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 254971,
+          "clean_chars": 5980,
+          "relevance_score": 6.0,
+          "error": null,
+          "duration_seconds": 1.97
+        },
+        {
+          "url": "https://postman.com/pricing",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 1032568,
+          "clean_chars": 23918,
+          "relevance_score": 3.5,
+          "error": null,
+          "duration_seconds": 1.94
+        }
+      ],
+      "usage": {
+        "llm_calls": 1,
+        "prompt_tokens": 5685,
+        "completion_tokens": 1175,
+        "total_tokens": 6860,
+        "estimated_cost_usd": 0.001734,
+        "model": "openai/gpt-oss-120b"
+      },
+      "errors": [],
+      "duration_seconds": 97.53,
+      "extracted_at": "2026-09-13T05:58:52+00:00"
+    },
+    {
+      "domain": "supabase.com",
+      "url": "https://supabase.com",
+      "status": "success",
+      "company_overview": "Supabase provides a managed Postgres development platform that adds authentication, realtime, storage, edge functions, and auto‑generated APIs to a PostgreSQL database. It enables developers to build and scale full‑stack applications without managing infrastructure.",
+      "target_audience": "Developers building applications that require a managed PostgreSQL backend.",
+      "contact_emails": [
+        {
+          "email": "help-events@supabase.com",
+          "type": "support"
+        },
+        {
+          "email": "abuse@supabase.com",
+          "type": "security"
+        },
+        {
+          "email": "security@supabase.com",
+          "type": "security"
+        },
+        {
+          "email": "privacy@supabase.com",
+          "type": "privacy"
+        },
+        {
+          "email": "legal@supabase.com",
+          "type": "other"
+        }
+      ],
+      "personal_emails": [],
+      "team_members": [
+        {
+          "name": "Jon Meyers",
+          "title": "DevRel Engineer",
+          "linkedin_url": "https://www.linkedin.com/in/jon-meyers",
+          "affiliation": null,
+          "title_source": "search",
+          "linkedin_source": "search",
+          "linkedin_confidence": 0.95,
+          "linkedin_evidence": [
+            "name matches profile slug and result title",
+            "company corroborated in search result",
+            "title read from the matched search result: DevRel Engineer"
+          ]
+        },
+        {
+          "name": "Chris Martin",
+          "title": "Solutions Architect",
+          "linkedin_url": "https://www.linkedin.com/in/cmartin616",
+          "affiliation": null,
+          "title_source": "search",
+          "linkedin_source": "search",
+          "linkedin_confidence": 0.75,
+          "linkedin_evidence": [
+            "name matches result title",
+            "company corroborated in search result",
+            "title read from the matched search result: Solutions Architect"
+          ]
+        },
+        {
+          "name": "Amy Quek",
+          "title": "Marketing Operations",
+          "linkedin_url": "https://www.linkedin.com/in/amyquek001",
+          "affiliation": null,
+          "title_source": "search",
+          "linkedin_source": "search",
+          "linkedin_confidence": 0.95,
+          "linkedin_evidence": [
+            "name matches profile slug and result title",
+            "company corroborated in search result",
+            "title read from the matched search result: Marketing Operations"
+          ]
+        },
+        {
+          "name": "Beng Eu",
+          "title": null,
+          "linkedin_url": "https://www.linkedin.com/in/thebengeu",
+          "affiliation": null,
+          "title_source": null,
+          "linkedin_source": "search",
+          "linkedin_confidence": 0.95,
+          "linkedin_evidence": [
+            "name matches profile slug and result title",
+            "company corroborated in search result"
+          ]
+        }
+      ],
+      "data_confidence_score": 0.958,
+      "confidence_breakdown": {
+        "completeness": 0.968,
+        "source_coverage": 1.0,
+        "evidence_strength": 0.825,
+        "validation_health": 1.0,
+        "llm_self_reported": 0.85,
+        "final": 0.958,
+        "notes": [
+          "4 LinkedIn URL(s) recovered by search fallback",
+          "2 name(s) dropped with no title and no verifiable profile: Riccardo Bussetti, Tyler Hillery"
+        ]
+      },
+      "pages_crawled": [
+        {
+          "url": "https://supabase.com",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 1334412,
+          "clean_chars": 7161,
+          "relevance_score": 100.0,
+          "error": null,
+          "duration_seconds": 0.41
+        },
+        {
+          "url": "https://supabase.com/contact-us",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 56509,
+          "clean_chars": 1606,
+          "relevance_score": 10.5,
+          "error": null,
+          "duration_seconds": 0.12
+        },
+        {
+          "url": "https://supabase.com/customers/happyteams",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 118884,
+          "clean_chars": 4112,
+          "relevance_score": 6.5,
+          "error": null,
+          "duration_seconds": 0.54
+        },
+        {
+          "url": "https://supabase.com/solutions/innovation-teams",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 249017,
+          "clean_chars": 8673,
+          "relevance_score": 6.25,
+          "error": null,
+          "duration_seconds": 0.31
+        },
+        {
+          "url": "https://supabase.com/careers",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 1159449,
+          "clean_chars": 6831,
+          "relevance_score": 5.0,
+          "error": null,
+          "duration_seconds": 0.25
+        },
+        {
+          "url": "https://supabase.com/company",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 150530,
+          "clean_chars": 2498,
+          "relevance_score": 5.0,
+          "error": null,
+          "duration_seconds": 0.14
+        }
+      ],
+      "usage": {
+        "llm_calls": 1,
+        "prompt_tokens": 6548,
+        "completion_tokens": 1063,
+        "total_tokens": 7611,
+        "estimated_cost_usd": 0.001779,
+        "model": "openai/gpt-oss-120b"
+      },
+      "errors": [],
+      "duration_seconds": 17.48,
+      "extracted_at": "2026-09-13T05:57:32+00:00"
+    },
+    {
+      "domain": "vapi.ai",
+      "url": "https://vapi.ai",
+      "status": "success",
+      "company_overview": "Vapi provides a platform for building, deploying, and managing voice AI agents for enterprises, offering features such as orchestration, real‑time monitoring, and compliance. It supports large‑scale call volumes with sub‑500 ms latency and enterprise‑grade security standards.",
+      "target_audience": "Enterprises that need voice AI agents to handle customer support, sales, or other high‑volume call interactions.",
+      "contact_emails": [
+        {
+          "email": "talent@vapi.ai",
+          "type": "careers"
+        }
+      ],
+      "personal_emails": [],
+      "team_members": [
+        {
+          "name": "Jason Mitura",
+          "title": "VP of Software Development",
+          "linkedin_url": null,
+          "affiliation": null,
+          "title_source": "website",
+          "linkedin_source": null,
+          "linkedin_confidence": 0.0,
+          "linkedin_evidence": [
+            "search returned no results"
+          ]
+        }
+      ],
+      "data_confidence_score": 0.732,
+      "confidence_breakdown": {
+        "completeness": 0.613,
+        "source_coverage": 1.0,
+        "evidence_strength": 0.5,
+        "validation_health": 1.0,
+        "llm_self_reported": 0.85,
+        "final": 0.732,
+        "notes": [
+          "only one contact email found",
+          "no LinkedIn URLs resolved for team members"
+        ]
+      },
+      "pages_crawled": [
+        {
+          "url": "https://vapi.ai",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 222757,
+          "clean_chars": 2730,
+          "relevance_score": 100.0,
+          "error": null,
+          "duration_seconds": 0.55
+        },
+        {
+          "url": "https://vapi.ai/careers",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 649193,
+          "clean_chars": 2859,
+          "relevance_score": 5.0,
+          "error": null,
+          "duration_seconds": 0.28
+        },
+        {
+          "url": "https://vapi.ai/custom-agents/automated-sales-team-performance-reports",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 179080,
+          "clean_chars": 3590,
+          "relevance_score": 4.0,
+          "error": null,
+          "duration_seconds": 1.21
+        },
+        {
+          "url": "https://vapi.ai/custom-agents/sales-team-agent",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 178124,
+          "clean_chars": 3200,
+          "relevance_score": 4.0,
+          "error": null,
+          "duration_seconds": 1.26
+        },
+        {
+          "url": "https://vapi.ai/library/why-is-no-one-talking-about-these-vapi-tools",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 127025,
+          "clean_chars": 1052,
+          "relevance_score": 4.0,
+          "error": null,
+          "duration_seconds": 0.73
+        },
+        {
+          "url": "https://vapi.ai/library/build-sales-teams-with-ai-voice-agents-heres-how",
+          "status": "ok",
+          "tier": "http",
+          "http_status": 200,
+          "raw_chars": 131237,
+          "clean_chars": 1083,
+          "relevance_score": 4.0,
+          "error": null,
+          "duration_seconds": 0.59
+        }
+      ],
+      "usage": {
+        "llm_calls": 1,
+        "prompt_tokens": 4513,
+        "completion_tokens": 1007,
+        "total_tokens": 5520,
+        "estimated_cost_usd": 0.001432,
+        "model": "openai/gpt-oss-120b"
+      },
+      "errors": [],
+      "duration_seconds": 48.06,
+      "extracted_at": "2026-09-13T05:58:02+00:00"
+    }
+  ]
+}

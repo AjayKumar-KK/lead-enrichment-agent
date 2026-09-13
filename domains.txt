@@ -1,0 +1,8 @@
+# One domain per line. Blank lines and lines starting with # are ignored.
+# Extra comma-separated columns are ignored, so a CSV export works too.
+#
+# Usage: python run.py --input domains.txt
+
+postman.com
+supabase.com
+vapi.ai

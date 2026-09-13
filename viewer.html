@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Lead Enrichment Agent</title>
+<style>
+  :root{
+    --bg:#f4f7fb;
+    --panel:#ffffff;
+    --ink:#101828;
+    --muted:#667085;
+    --line:#e4e7ec;
+    --accent:#3867ff;
+    --accent-soft:#edf2ff;
+    --ok:#067647;
+    --ok-soft:#ecfdf3;
+    --warn:#b54708;
+    --warn-soft:#fffaeb;
+    --fail:#b42318;
+    --fail-soft:#fef3f2;
+    --chip:#f2f4f7;
+    --shadow:0 8px 28px rgba(16,24,40,.06);
+  }
+
+  *{box-sizing:border-box}
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at top right, rgba(56,103,255,.07), transparent 28%),
+      var(--bg);
+    color:var(--ink);
+    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+
+  button,input{font:inherit}
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:34px 20px 72px;
+  }
+
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    margin-bottom:22px;
+  }
+
+  h1{
+    margin:0;
+    font-size:30px;
+    line-height:1.15;
+    letter-spacing:-.025em;
+  }
+
+  .sub{
+    margin:8px 0 0;
+    color:var(--muted);
+    font-size:14px;
+    max-width:720px;
+  }
+
+  .status{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    border:1px solid var(--line);
+    background:var(--panel);
+    border-radius:999px;
+    padding:8px 11px;
+    color:var(--muted);
+    font-size:12px;
+    font-weight:650;
+    white-space:nowrap;
+  }
+
+  .status .dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--ok);
+    box-shadow:0 0 0 4px rgba(6,118,71,.08);
+  }
+
+  .hero{
+    background:linear-gradient(135deg,#ffffff 0%,#f8faff 100%);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px;
+    box-shadow:var(--shadow);
+    margin-bottom:18px;
+  }
+
+  .hero-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+
+  .eyebrow{
+    color:var(--accent);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    font-weight:750;
+    margin-bottom:5px;
+  }
+
+  .hero-title{
+    font-size:20px;
+    font-weight:700;
+    letter-spacing:-.015em;
+    margin:0;
+  }
+
+  .hero-copy{
+    color:var(--muted);
+    margin:5px 0 0;
+    font-size:13px;
+  }
+
+  .hero-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+
+  .btn{
+    border:1px solid var(--line);
+    border-radius:9px;
+    background:var(--panel);
+    color:var(--ink);
+    padding:9px 12px;
+    cursor:pointer;
+    font-size:12.5px;
+    font-weight:650;
+  }
+
+  .btn:hover{border-color:#c8ced8}
+  .btn.primary{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+  }
+  .btn.primary:hover{filter:brightness(.97)}
+
+  .success-banner{
+    margin-top:16px;
+    border-radius:11px;
+    padding:11px 13px;
+    border:1px solid #abefc6;
+    background:var(--ok-soft);
+    color:var(--ok);
+    font-size:13px;
+    font-weight:650;
+  }
+
+  .success-banner.warn{
+    border-color:#fedf89;
+    background:var(--warn-soft);
+    color:var(--warn);
+  }
+
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(7,minmax(0,1fr));
+    gap:10px;
+    margin:18px 0;
+  }
+
+  .stat{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:13px;
+    padding:14px 15px;
+    box-shadow:0 3px 14px rgba(16,24,40,.03);
+  }
+
+  .stat .k{
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.07em;
+    color:var(--muted);
+  }
+
+  .stat .v{
+    font-size:21px;
+    font-weight:750;
+    margin-top:5px;
+    font-variant-numeric:tabular-nums;
+  }
+
+  .stat.success .v{color:var(--ok)}
+  .stat.fail .v{color:var(--fail)}
+
+  .drop{
+    border:1.5px dashed #c8ced8;
+    border-radius:15px;
+    padding:23px 18px;
+    text-align:center;
+    background:rgba(255,255,255,.72);
+    transition:border-color .15s,background .15s,transform .15s;
+    cursor:pointer;
+    margin-bottom:18px;
+  }
+
+  .drop:hover{border-color:#9aa5b5}
+  .drop.hot{
+    border-color:var(--accent);
+    background:var(--accent-soft);
+    transform:translateY(-1px);
+  }
+
+  .drop-icon{
+    width:34px;
+    height:34px;
+    display:grid;
+    place-items:center;
+    margin:0 auto 9px;
+    border-radius:10px;
+    background:var(--accent-soft);
+    color:var(--accent);
+    font-weight:800;
+  }
+
+  .drop h2{
+    margin:0 0 3px;
+    font-size:15px;
+    font-weight:700;
+  }
+
+  .drop p{
+    margin:0;
+    color:var(--muted);
+    font-size:12.5px;
+  }
+
+  input[type=file]{display:none}
+
+  .section-head{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+    gap:12px;
+    margin:26px 0 12px;
+  }
+
+  .section-head h2{
+    margin:0;
+    font-size:18px;
+    letter-spacing:-.015em;
+  }
+
+  .section-head p{
+    margin:0;
+    color:var(--muted);
+    font-size:12.5px;
+  }
+
+  .result-grid{
+    display:grid;
+    gap:14px;
+  }
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:19px 20px;
+    box-shadow:var(--shadow);
+  }
+
+  .head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:17px;
+  }
+
+  .domain{
+    font-size:18px;
+    font-weight:750;
+    letter-spacing:-.01em;
+  }
+
+  .badge{
+    font-size:10.5px;
+    font-weight:750;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    padding:4px 9px;
+    border-radius:999px;
+    background:var(--chip);
+  }
+
+  .badge.success{color:var(--ok);background:var(--ok-soft)}
+  .badge.partial{color:var(--warn);background:var(--warn-soft)}
+  .badge.failed{color:var(--fail);background:var(--fail-soft)}
+
+  .conf{
+    margin-left:auto;
+    min-width:150px;
+  }
+
+  .conf-top{
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    color:var(--muted);
+    font-size:11px;
+    margin-bottom:5px;
+  }
+
+  .conf-top strong{
+    color:var(--ink);
+    font-size:12px;
+  }
+
+  .bar{
+    width:100%;
+    height:7px;
+    border-radius:999px;
+    background:var(--chip);
+    overflow:hidden;
+  }
+
+  .bar i{
+    display:block;
+    height:100%;
+    background:linear-gradient(90deg,var(--accent),#6387ff);
+    border-radius:999px;
+  }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);
+    gap:20px;
+    align-items:start;
+  }
+
+  .field{
+    margin:0 0 16px;
+    font-size:14px;
+  }
+
+  .field:last-child{margin-bottom:0}
+
+  .lbl{
+    display:block;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.075em;
+    color:var(--muted);
+    font-weight:700;
+    margin-bottom:4px;
+  }
+
+  .overview,.icp{
+    color:#344054;
+  }
+
+  .pill-wrap{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+  }
+
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    background:var(--chip);
+    border:1px solid #eaecf0;
+    border-radius:8px;
+    padding:6px 8px 6px 10px;
+    font-size:12px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+
+  .email-type{
+    color:var(--muted);
+    font-size:10.5px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    font-family:inherit;
+  }
+
+  .team-source{
+    color:var(--muted);
+    font-size:11.5px;
+    white-space:nowrap;
+  }
+
+  .score-origin{
+    margin-top:10px;
+    padding:8px 10px;
+    border-left:2px solid var(--line);
+    color:var(--muted);
+    font-size:11.5px;
+    line-height:1.5;
+  }
+
+  .copy-btn{
+    border:0;
+    background:transparent;
+    color:var(--accent);
+    font-size:11px;
+    cursor:pointer;
+    padding:0;
+    font-weight:650;
+  }
+
+  .copy-btn:hover{text-decoration:underline}
+
+  .team{
+    border:1px solid var(--line);
+    border-radius:11px;
+    overflow:hidden;
+  }
+
+  .team-row{
+    display:grid;
+    grid-template-columns:1fr 1fr auto auto;
+    gap:10px;
+    padding:9px 11px;
+    border-bottom:1px solid var(--line);
+    font-size:12.5px;
+    align-items:center;
+  }
+
+  .team-row:last-child{border-bottom:0}
+  .team-head{
+    background:#f8fafc;
+    color:var(--muted);
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    font-weight:700;
+  }
+
+  .team-name{font-weight:650}
+  .team-title{color:#475467}
+
+  a{
+    color:var(--accent);
+    text-decoration:none;
+    font-weight:600;
+    font-size:12px;
+  }
+
+  a:hover{text-decoration:underline}
+
+  .side-panel{
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:13px;
+    background:#fbfcfe;
+  }
+
+  .side-title{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.07em;
+    color:var(--muted);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+
+  .metrics{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+
+  .metric{
+    border:1px solid var(--line);
+    border-radius:9px;
+    background:var(--panel);
+    padding:9px;
+  }
+
+  .metric .m-k{
+    color:var(--muted);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+  }
+
+  .metric .m-v{
+    margin-top:2px;
+    font-size:13px;
+    font-weight:700;
+    font-variant-numeric:tabular-nums;
+  }
+
+  details{
+    margin-top:13px;
+    border-top:1px solid var(--line);
+    padding-top:11px;
+  }
+
+  summary{
+    cursor:pointer;
+    color:var(--muted);
+    font-size:12px;
+    font-weight:650;
+  }
+
+  details ul{
+    margin:9px 0 0;
+    padding-left:17px;
+  }
+
+  details li{
+    margin:4px 0;
+    color:var(--muted);
+    font-size:12px;
+  }
+
+  .empty{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:28px;
+    text-align:center;
+    color:var(--muted);
+  }
+
+  .foot{
+    margin-top:24px;
+    text-align:center;
+    color:var(--muted);
+    font-size:11px;
+  }
+
+  .hide{display:none}
+
+  @media (max-width:900px){
+    .stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .content-grid{grid-template-columns:1fr}
+  }
+
+  @media (max-width:620px){
+    .wrap{padding:24px 14px 52px}
+    h1{font-size:25px}
+    .topbar{flex-direction:column}
+    .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .hero{padding:17px}
+    .card{padding:15px}
+    .conf{margin-left:0;width:100%}
+    .team-row{grid-template-columns:1fr}
+    .team-head{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <h1>AI Lead Enrichment Agent</h1>
+      <p class="sub">Autonomous company intelligence extraction using browser automation, content cleaning and structured LLM outputs.</p>
+    </div>
+    <div class="status"><span class="dot"></span><span id="statusText">Waiting for results</span></div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-row">
+      <div>
+        <div class="eyebrow">Agent run</div>
+        <p class="hero-title" id="heroTitle">Lead enrichment results</p>
+        <p class="hero-copy">Load a generated <code>output.json</code> file, or serve this page locally to auto-load <code>output/output.json</code>.</p>
+      </div>
+      <div class="hero-actions">
+        <button class="btn primary" id="loadBtn">Load output.json</button>
+        <button class="btn" id="downloadBtn" disabled>Download JSON</button>
+      </div>
+    </div>
+    <div id="banner" class="success-banner hide"></div>
+  </section>
+    <input type="file" id="file" accept="application/json,.json">
+
+  <div id="report" class="hide"></div>
+
+  <div class="foot">AI Lead Enrichment Agent · Browser automation + structured LLM extraction</div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+
+let currentData = null;
+
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"
+}[c]));
+
+const num = (n) => Number(n ?? 0).toLocaleString();
+
+function stat(label, value, cls = "") {
+  return `
+    <div class="stat ${cls}">
+      <div class="k">${esc(label)}</div>
+      <div class="v">${esc(value)}</div>
+    </div>`;
+}
+
+function copyEmail(email, btn) {
+  navigator.clipboard.writeText(email).then(() => {
+    const old = btn.textContent;
+    btn.textContent = "copied";
+    setTimeout(() => btn.textContent = old, 1200);
+  }).catch(() => {});
+}
+
+function renderEmails(emails, personal) {
+  // contact_emails used to be a flat list of strings and is now
+  // [{email, type}]; accept either so an older output.json still renders.
+  const rows = (emails || []).map(e =>
+    typeof e === "string" ? { email: e, type: null } : e
+  );
+  if (!rows.length && !(personal || []).length) return "";
+
+  const pill = (address, type) => `
+    <span class="pill">
+      ${esc(address)}${type ? `<span class="email-type">${esc(type)}</span>` : ""}
+      <button class="copy-btn" data-email="${esc(address)}" onclick="copyEmail(this.dataset.email, this)">copy</button>
+    </span>`;
+
+  return `
+    ${rows.length ? `
+    <div class="field">
+      <span class="lbl">Contact points</span>
+      <div class="pill-wrap">${rows.map(e => pill(e.email, e.type)).join("")}</div>
+    </div>` : ""}
+    ${(personal || []).length ? `
+    <div class="field">
+      <span class="lbl">Individual inboxes &middot; not contact points</span>
+      <div class="pill-wrap">${personal.map(e => pill(e, null)).join("")}</div>
+    </div>` : ""}`;
+}
+
+function renderTeam(team) {
+  if (!team?.length) return "";
+  return `
+    <div class="field">
+      <span class="lbl">Leadership / team (${team.length})</span>
+      <div class="team">
+        <div class="team-row team-head">
+          <div>Name</div><div>Title</div><div>LinkedIn</div><div>Source</div>
+        </div>
+        ${team.map(m => `
+          <div class="team-row">
+            <div class="team-name">${esc(m.name)}</div>
+            <div class="team-title">${esc(m.title || "—")}</div>
+            <div>
+              ${m.linkedin_url
+                ? `<a href="${esc(m.linkedin_url)}" target="_blank" rel="noopener">View profile ↗</a>`
+                : "—"}
+            </div>
+            <div class="team-source" title="${esc((m.linkedin_evidence || []).join(" • "))}">
+              ${m.linkedin_source
+                ? `${esc(m.linkedin_source)}${m.linkedin_confidence
+                     ? ` ${Number(m.linkedin_confidence).toFixed(2)}` : ""}`
+                : "—"}
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    </div>`;
+}
+
+function renderConfidence(r) {
+  const conf = Number(r.data_confidence_score ?? 0);
+  const cb = r.confidence_breakdown || {};
+  const notes = cb.notes || [];
+  const errors = r.errors || [];
+
+  return `
+    <div class="side-panel">
+      <div class="side-title">Confidence details</div>
+      <div class="metrics">
+        <div class="metric">
+          <div class="m-k">Overall</div>
+          <div class="m-v">${(conf * 100).toFixed(0)}%</div>
+        </div>
+        <div class="metric">
+          <div class="m-k">Completeness</div>
+          <div class="m-v">${Number(cb.completeness ?? 0).toFixed(2)}</div>
+        </div>
+        <div class="metric">
+          <div class="m-k">Source coverage</div>
+          <div class="m-v">${Number(cb.source_coverage ?? 0).toFixed(2)}</div>
+        </div>
+        <div class="metric">
+          <div class="m-k">Evidence</div>
+          <div class="m-v">${cb.evidence_strength === undefined
+            ? "—"
+            : Number(cb.evidence_strength).toFixed(2)}</div>
+        </div>
+        <div class="metric">
+          <div class="m-k">Validation</div>
+          <div class="m-v">${Number(cb.validation_health ?? 0).toFixed(2)}</div>
+        </div>
+      </div>
+      ${cb.llm_self_reported !== undefined ? `
+        <div class="score-origin">
+          Score computed from the four measured components above.
+          The model claimed ${Number(cb.llm_self_reported).toFixed(2)} &mdash; recorded for
+          comparison, not used in the score.
+        </div>` : ""}
+
+      ${(notes.length || errors.length) ? `
+        <details>
+          <summary>Notes & extraction details</summary>
+          <ul>
+            ${notes.map(n => `<li>${esc(n)}</li>`).join("")}
+            ${errors.map(e => `<li>${esc(e)}</li>`).join("")}
+          </ul>
+        </details>` : ""}
+    </div>`;
+}
+
+function renderCard(r) {
+  const conf = Number(r.data_confidence_score ?? 0);
+  const pages = r.pages_crawled || [];
+  const pagesOk = pages.filter(p => p.status === "ok").length;
+  const tiers = [...new Set(pages.filter(p => p.status === "ok").map(p => p.tier).filter(Boolean))];
+  const usage = r.usage || {};
+
+  return `
+    <article class="card">
+      <div class="head">
+        <span class="domain">${esc(r.domain)}</span>
+        <span class="badge ${esc(r.status)}">${esc(r.status)}</span>
+
+        <div class="conf">
+          <div class="conf-top">
+            <span>Data confidence</span>
+            <strong>${(conf * 100).toFixed(0)}%</strong>
+          </div>
+          <div class="bar"><i style="width:${Math.max(0, Math.min(100, conf * 100))}%"></i></div>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <div>
+          ${r.company_overview ? `
+            <div class="field">
+              <span class="lbl">Company overview</span>
+              <div class="overview">${esc(r.company_overview)}</div>
+            </div>` : ""}
+
+          ${r.target_audience ? `
+            <div class="field">
+              <span class="lbl">Target audience / ICP</span>
+              <div class="icp">${esc(r.target_audience)}</div>
+            </div>` : ""}
+
+          ${renderEmails(r.contact_emails, r.personal_emails)}
+          ${renderTeam(r.team_members)}
+        </div>
+
+        <div>
+          <div class="side-panel">
+            <div class="side-title">Crawl & extraction</div>
+            <div class="metrics">
+              <div class="metric">
+                <div class="m-k">Pages</div>
+                <div class="m-v">${pagesOk}/${pages.length || 0}</div>
+              </div>
+              <div class="metric">
+                <div class="m-k">Tokens</div>
+                <div class="m-v">${num(usage.total_tokens)}</div>
+              </div>
+              <div class="metric">
+                <div class="m-k">Cost</div>
+                <div class="m-v">$${Number(usage.estimated_cost_usd || 0).toFixed(5)}</div>
+              </div>
+              <div class="metric">
+                <div class="m-k">Duration</div>
+                <div class="m-v">${Number(r.duration_seconds || 0).toFixed(1)}s</div>
+              </div>
+            </div>
+
+            ${tiers.length ? `
+              <div style="margin-top:10px;color:var(--muted);font-size:11px;">
+                Retrieval: ${esc(tiers.join(" + "))}
+              </div>` : ""}
+          </div>
+
+          ${renderConfidence(r)}
+        </div>
+      </div>
+    </article>`;
+}
+
+function render(data) {
+  currentData = data;
+
+  const results = data.results || [];
+  const success = Number(data.domains_succeeded ?? results.filter(r => r.status === "success").length);
+  const partial = Number(data.domains_partial ?? results.filter(r => r.status === "partial").length);
+  const failed = Number(data.domains_failed ?? results.filter(r => r.status === "failed").length);
+
+  $("report").className = "";
+
+  $("report").innerHTML = `
+    <div class="stats">
+      ${stat("Domains", results.length)}
+      ${stat("Success", success, "success")}
+      ${stat("Partial", partial)}
+      ${stat("Failed", failed, "fail")}
+      ${stat("Tokens", num(data.total_tokens))}
+      ${stat("Cost", "$" + Number(data.total_estimated_cost_usd ?? 0).toFixed(5))}
+      ${stat("Duration", (data.duration_seconds ?? 0) + "s")}
+    </div>
+
+    <div class="section-head">
+      <div>
+        <h2>Enriched companies</h2>
+        <p>${results.length} domain${results.length === 1 ? "" : "s"} processed</p>
+      </div>
+    </div>
+
+    <div class="result-grid">
+      ${results.length ? results.map(renderCard).join("") : `
+        <div class="empty">No result records were found in this JSON file.</div>
+      `}
+    </div>`;
+
+  $("downloadBtn").disabled = false;
+
+  const allSuccess = results.length > 0 && success === results.length && partial === 0 && failed === 0;
+
+  $("statusText").textContent = allSuccess ? "Run completed" : "Results loaded";
+
+  const banner = $("banner");
+  banner.className = allSuccess ? "success-banner" : "success-banner warn";
+  banner.textContent = allSuccess
+    ? `✓ All ${results.length} domains enriched successfully.`
+    : `Results loaded · ${success} success · ${partial} partial · ${failed} failed`;
+}
+
+function loadFile(file) {
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    try {
+      render(JSON.parse(reader.result));
+    } catch (err) {
+      $("report").className = "";
+      $("report").innerHTML =
+        `<div class="empty">Could not read that JSON file: ${esc(err.message)}</div>`;
+      $("statusText").textContent = "Invalid JSON";
+    }
+  };
+
+  reader.readAsText(file);
+}
+
+async function autoLoad() {
+  // Automatic loading works when viewer.html is served from a local web server.
+  // When opened directly with file://, browsers may block this request, so the
+  // file picker remains available as the fallback.
+  if (window.location.protocol === "file:") return;
+
+  try {
+    const response = await fetch("output/output.json", { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    render(await response.json());
+  } catch (err) {
+    $("statusText").textContent = "Choose output.json";
+  }
+}
+
+$("loadBtn").addEventListener("click", () => $("file").click());
+
+$("file").addEventListener("change", e => {
+  if (e.target.files[0]) loadFile(e.target.files[0]);
+});
+
+$("downloadBtn").addEventListener("click", () => {
+  if (!currentData) return;
+
+  const blob = new Blob([JSON.stringify(currentData, null, 2)], {
+    type: "application/json"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "lead-enrichment-output.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+});
+
+["dragenter", "dragover"].forEach(ev =>
+  document.addEventListener(ev, e => {
+    e.preventDefault();
+    $("drop").classList.add("hot");
+  })
+);
+
+["dragleave", "drop"].forEach(ev =>
+  document.addEventListener(ev, e => {
+    e.preventDefault();
+    $("drop").classList.remove("hot");
+  })
+);
+
+document.addEventListener("drop", e => {
+  const f = e.dataTransfer?.files?.[0];
+  if (f) loadFile(f);
+});
+
+if (window.location.protocol === "file:") {
+  $("statusText").textContent = "Choose output.json";
+} else {
+  autoLoad();
+}
+</script>
+</body>
+</html>
