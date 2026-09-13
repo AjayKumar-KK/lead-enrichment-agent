@@ -139,7 +139,7 @@ virtual environment on a laptop.
 ### 1. Get the code and create a virtual environment
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/AjayKumar-KK/lead-enrichment-agent.git
 cd lead-enrichment-agent
 ```
 
